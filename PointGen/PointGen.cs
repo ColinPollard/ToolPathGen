@@ -111,25 +111,30 @@ namespace PointGen
 
             double subPassTime;
             int subPassSteps;
-            //Iterate through points, calculate paths between.
-            for(int i = 1; i < points.Count; i++)
+
+            //Iterate through z paths
+            for(int z = 0; z < numPaths; z++)
             {
-                //Calculate time from length/velocity, steps from time/timestep
-                subPassTime = Math.Sqrt(Math.Pow(points[i].Item1 - points[i-1].Item1, 2) + Math.Pow(points[i].Item2 - points[i - 1].Item2, 2) + Math.Pow(points[i].Item3 - points[i - 1].Item3, 2)) / velocity;
-                subPassSteps = (int)(subPassTime / timeStep);
-
-
-                for(int j = 0; j < subPassSteps; j++)
+                //Iterate through points, calculate paths between.
+                for (int i = 1; i < points.Count; i++)
                 {
-                    //X = ((NewX-OldX)/steps * current step) + oldX
-                    xPoints.Add((((points[i].Item1 - points[i - 1].Item1) / subPassSteps) * j) + points[i - 1].Item1);
-                    yPoints.Add((((points[i].Item2 - points[i - 1].Item2) / subPassSteps) * j) + points[i - 1].Item2);
-                    zPoints.Add((((points[i].Item3 - points[i - 1].Item3) / subPassSteps) * j) + points[i - 1].Item3);
-                }
+                    //Calculate time from length/velocity, steps from time/timestep
+                    subPassTime = Math.Sqrt(Math.Pow(points[i].Item1 - points[i - 1].Item1, 2) + Math.Pow(points[i].Item2 - points[i - 1].Item2, 2) + Math.Pow(points[i].Item3 - points[i - 1].Item3, 2)) / velocity;
+                    subPassSteps = (int)(subPassTime / timeStep);
 
-                //Update running tallies.
-                estimatedTime += subPassTime;
-                toolPathPoints += subPassSteps;
+
+                    for (int j = 0; j < subPassSteps; j++)
+                    {
+                        //X = ((NewX-OldX)/steps * current step) + oldX
+                        xPoints.Add((((points[i].Item1 - points[i - 1].Item1) / subPassSteps) * j) + points[i - 1].Item1);
+                        yPoints.Add((((points[i].Item2 - points[i - 1].Item2) / subPassSteps) * j) + points[i - 1].Item2);
+                        zPoints.Add((((points[i].Item3 - points[i - 1].Item3) / subPassSteps) * j) + points[i - 1].Item3 + (z * pathHeight));
+                    }
+
+                    //Update running tallies.
+                    estimatedTime += subPassTime;
+                    toolPathPoints += subPassSteps;
+                }
             }
             if (toolPathPoints > maxPoints)
                 throw new Exception("Number of points generated exceeds maximum allowed. Try reducing timestep to decrease points.");
