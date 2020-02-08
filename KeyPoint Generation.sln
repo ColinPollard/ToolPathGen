@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "KeyPoint Generation\View.csproj", "{C3C80F32-311F-4FB7-9195-795D59C72843}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "PointGen\Model.csproj", "{91D7642D-C7EA-401E-90F8-89217FEB6B46}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3C80F32-311F-4FB7-9195-795D59C72843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3C80F32-311F-4FB7-9195-795D59C72843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3C80F32-311F-4FB7-9195-795D59C72843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3C80F32-311F-4FB7-9195-795D59C72843}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91D7642D-C7EA-401E-90F8-89217FEB6B46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91D7642D-C7EA-401E-90F8-89217FEB6B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91D7642D-C7EA-401E-90F8-89217FEB6B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91D7642D-C7EA-401E-90F8-89217FEB6B46}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74049929-95F5-44D1-B07A-DAF2E26347D2}
+	EndGlobalSection
+EndGlobal
