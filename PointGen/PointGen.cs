@@ -16,7 +16,7 @@ namespace PointGen
         public delegate void SuccessHandler(double time, int steps);
         public event SuccessHandler success;
 
-        string filePath, outputPath;
+        string filePath, outputPath, stepDirection;
         int maxPoints;
         int numPaths;
         double pathHeight;
@@ -89,6 +89,9 @@ namespace PointGen
                 timeStep = Double.Parse(values[3]);
                 velocity = Double.Parse(values[4]);
 
+                //Doesn't check for input validity of step direction yet.
+                stepDirection = values[5];
+
                 //Loop through each line of the csv reading points
                 while (!reader.EndOfStream)
                 {
@@ -112,9 +115,38 @@ namespace PointGen
             double subPassTime;
             int subPassSteps;
 
-            //Iterate through z paths
-            for(int z = 0; z < numPaths; z++)
+            //Create variables to add to point calculation for stepping through layers in each direction.
+            int x, y, z;
+
+            //Set them to zero by default, and then assign to the one that is being stepped.
+            x = 0;
+            y = 0;
+            z = 0;
+
+            //Iterate through paths
+            for (int stepIteration = 0; stepIteration < numPaths; stepIteration++)
             {
+
+                //Set which direction to step through.
+                switch (stepDirection)
+                { 
+                    case "x":
+                        x = stepIteration;
+                        break;
+
+                    case "y":
+                        y = stepIteration;
+                        break;
+
+                    case "z":
+                        z = stepIteration;
+                        break;
+
+                    default:
+                        throw new Exception("Step Direction Not Recognized. Please enter lowercase x, y, or z.");
+                }
+
+
                 //Iterate through points, calculate paths between.
                 for (int i = 1; i < points.Count; i++)
                 {
@@ -126,8 +158,8 @@ namespace PointGen
                     for (int j = 0; j < subPassSteps; j++)
                     {
                         //X = ((NewX-OldX)/steps * current step) + oldX
-                        xPoints.Add((((points[i].Item1 - points[i - 1].Item1) / subPassSteps) * j) + points[i - 1].Item1);
-                        yPoints.Add((((points[i].Item2 - points[i - 1].Item2) / subPassSteps) * j) + points[i - 1].Item2);
+                        xPoints.Add((((points[i].Item1 - points[i - 1].Item1) / subPassSteps) * j) + points[i - 1].Item1 + (x * pathHeight));
+                        yPoints.Add((((points[i].Item2 - points[i - 1].Item2) / subPassSteps) * j) + points[i - 1].Item2 + (y * pathHeight));
                         zPoints.Add((((points[i].Item3 - points[i - 1].Item3) / subPassSteps) * j) + points[i - 1].Item3 + (z * pathHeight));
                     }
 
